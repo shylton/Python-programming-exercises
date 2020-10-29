@@ -2,10 +2,10 @@
 
 ## 1. Level description
 ### Level 1	Beginner 
-Beginner means someone who has just gone through an introductory Python course. He can solve some problems with 1 or 2 Python classes or functions. Normally, the answers could directly be found in the textbooks.
+Beginner means someone who has just gone through an introductory Python course. He can solve some problems with 1 or 2 Python classes or functions. Normally, the answers could directly be found in textbooks or online.
 
 ### Level 2	Intermediate 
-Intermediate means someone who has just learned Python, but already has a relatively strong programming background from before. He should be able to solve problems which may involve 3 or 3 Python classes or functions. The answers cannot be directly be found in the textbooks.
+Intermediate means someone who has just learned Python, but already has a relatively strong programming background from before. He should be able to solve problems which may involve 3 or 3 Python classes or functions. The answers cannot be directly be found in textbooks or online.
 
 ### Level 3	Advanced. 
 He should use Python to solve more complex problem using more rich libraries functions and data structures and algorithms. He is supposed to solve the problem using several Python standard packages and advanced techniques.
@@ -22,11 +22,9 @@ Solution
 
 ## 3. Questions
 
-### Question 1
-Level 1
+### Question 1 - Level 1
 
-Question:
-Write a program which will find all such numbers which are divisible by 7 but are not a multiple of 5, between 2000 and 3200 (both included).
+Write a program which will find the numbers between 2000 and 3200 (both included) which are divisible by 7 but not a multiple of 5.
 The numbers obtained should be printed in a comma-separated sequence on a single line.
 
 Hints: 
@@ -36,80 +34,135 @@ Consider use range(#begin, #end) method
 <summary>Show Solution</summary>
 
 ```python
-l=[]
+# solution 1
+l = []
 for i in range(2000, 3201):
-    if (i%7==0) and (i%5!=0):
+    if (i % 7 == 0) and (i % 5 != 0):
         l.append(str(i))
 
 print(','.join(l))
+
+# better solution. Uses less memory by not creating a list
+for i in range(2000, 3201):
+    if i % 7 == 0 and i % 5 != 0:
+        print(i, end=', ')
+print()  # print a newline
 ```
 </details>
 
-### Question 2
-Level 1
+
+### Question 1b - Level 1
 
 Question:
-Write a program which can compute the factorial of a given numbers.
-The results should be printed in a comma-separated sequence on a single line.
-Suppose the following input is supplied to the program:
-8
-Then, the output should be:
-40320
+Write a program that prints the numbers from 1 to 100. But for multiples of three print “Fizz” instead of the number and for the multiples of five print “Buzz”. For numbers which are multiples of both three and five print “FizzBuzz”.
 
-Hints:
-In case of input data being supplied to the question, it should be assumed to be a console input.
+Hints: 
+Consider use range(#begin, #end) method
 
 <details>
 <summary>Show Solution</summary>
 
 ```python
-def fact(x):
-    if x == 0:
-        return 1
-    return x * fact(x - 1)
-
-x=int(input())
-print(fact(x))
+for i in range(1, 101):
+    if i % 3 == 0 and i % 5 == 0:
+        print('FizzBuzz')
+    elif i % 5 == 0:
+        print('Buzz')
+    elif i % 3 == 0:
+        print('Fizz')
+    else:
+        print(i)
 ```
 </details>
 
-### Question 3
-Level 1
+### Question 2 - Level 1
 
-Question:
-With a given integral number n, write a program to generate a dictionary that contains (i, i*i) such that is an integral number between 1 and n (both included). and then the program should print the dictionary.
+Write a function to compute the factorial of a given integer.
+Suppose the following input is supplied to the program:
+8
+Then, the output should be:
+40320
+
+<details>
+<summary>Show Solution</summary>
+
+```python
+# iterative solution
+def factorial_iterative(integer):
+    assert type(integer) == int and integer > -1, 'input must be a non ' \
+                                                 'negative integer'
+
+    if integer == 0 or integer == 1:
+        return 1
+
+    result = integer
+    for i in range(integer - 1, 1, -1):
+        result *= i
+
+    return result
+
+
+# recursive solution
+def factorial_recursive(integer):
+    assert type(integer) == int and integer > -1, 'input must be a non ' \
+                                                 'negative integer'
+
+    if integer == 0:
+        return 1
+    return integer * factorial_recursive(integer - 1)
+
+# test the functions
+for x in [0, 1, 2, 3, 4, 8, -1]:
+    print(f'{x}! is', factorial_iterative(x), factorial_recursive(x))
+
+```
+</details>
+
+### Question 3 - Level 1
+
+With a given integer n, write a function to generate the dictionary with key = n and values = n*n for all from 1 to n inclusive. Then print the dictionary.
 Suppose the following input is supplied to the program:
 8
 Then, the output should be:
 {1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64}
 
 Hints:
-In case of input data being supplied to the question, it should be assumed to be a console input.
-Consider use dict()
+Consider use dict(), consider use the pprint module from the standard library
 
 <details>
 <summary>Show Solution</summary>
 
 ```python
-n=int(input())
-d=dict()
-for i in range(1,n+1):
-    d[i]=i*i
+# solution 1
+n = int(input())
+d = dict()
+for i in range(1, n+1):
+    d[i] = i*i
 
 print(d)
+
+# solution 2
+from pprint import pprint
+
+def squares_dict(integer):
+    assert type(integer) == int and integer > -1, 'input must be a non ' \
+                                                  'negative integer'
+    return {i: i**2 for i in range(1, integer + 1)}
+
+# test the function
+pprint(squares_dict(20))
+pprint(squares_dict('a'))
 ```
 </details>
 
-### Question 4
-Level 1
+### Question 4 - Level 1
 
-Question:
-Write a program which accepts a sequence of comma-separated numbers from console and generate a list and a tuple which contains every number.
+Write a program which accepts a sequence of comma-separated strings from console and generate a list and a tuple which contains every value.
 Suppose the following input is supplied to the program:
-34,67,55,33,12,98
+34,67,bacon,spam,eggs,33
 Then, the output should be:
-['34', '67', '55', '33', '12', '98']
-('34', '67', '55', '33', '12', '98')
+['34', '67', 'bacon', 'spam', 'eggs', '33']
+('34', '67', 'bacon', 'spam', 'eggs', '33')
 
 Hints:
 In case of input data being supplied to the question, it should be assumed to be a console input.
@@ -119,50 +172,45 @@ tuple() method can convert list to tuple
 <summary>Show Solution</summary>
 
 ```python
-values=input()
-l=values.split(",")
-t=tuple(l)
-print(l)
-print(t)
+values = input('Type comma separated values without spaces,'
+               ' then hit [ENTER] => ')
+val_list = values.split(",")
+val_tuple = tuple(val_list)
+print(val_list)
+print(val_tuple)
 ```
 </details>
 
-### Question 5
-Level 1
+### Question 5 - Level 1
 
-Question:
-Define a class which has at least two methods:
-getString: to get a string from console input
-printString: to print the string in upper case.
+Define a class which has two methods:
+get_string: to get a string from console input
+print_string: to print the string in upper case
 Also please include simple test function to test the class methods.
-
-Hints:
-Use __init__ method to construct some parameters
 
 <details>
 <summary>Show Solution</summary>
 
 ```python
-class InputOutString(object):
+class InputOutString:
     def __init__(self):
-        self.s = ""
+        self.string = ""
 
-    def getString(self):
-        self.s = input()
-    
-    def printString(self):
-        print(self.s.upper())
+    def get_string(self):
+        self.string = input('type the string then hit [ENTER] ')
 
-strObj = InputOutString()
-strObj.getString()
-strObj.printString()
+    def print_string(self):
+        print(self.string.upper())
+
+
+str_obj = InputOutString()
+str_obj.get_string()
+str_obj.print_string()
 ```
 </details>
 
-### Question 6
-Level 2
+### Question 6 - Level 2
 
-Question:
 Write a program that calculates and prints the value according to the given formula:
 Q = Square root of [(2 * C * D)/H]
 Following are the fixed values of C and H:
@@ -183,40 +231,35 @@ In case of input data being supplied to the question, it should be assumed to be
 
 ```python
 import math
-c=50
-h=30
-value = []
-items=[x for x in input().split(',')]
+c = 50
+h = 30
+values = []
+items = [x for x in input().split(',')]
 for d in items:
-    value.append(str(int(round(math.sqrt(2*c*float(d)/h)))))
+    values.append(str(int(round(math.sqrt(2*c*float(d)/h)))))
 
-print(','.join(value))
+print(','.join(values))
 ```
 </details>
 
-### Question 7
-Level 2
+### Question 7 - Level 2
 
-Question:
-Write a program which takes 2 digits, X,Y as input and generates a 2-dimensional array. The element value in the i-th row and j-th column of the array should be i*j.
-Note: i=0,1.., X-1; j=0,1,¡­Y-1.
-Example
-Suppose the following inputs are given to the program:
+Write a program which takes 2 numbers, i and j as input and generates a 2-dimensional array. The element value in the i-th row and j-th column of the array should be i*j.
+Note: i=0,1 ... i-1; j=0,1 ... j-1.
+Example. Suppose the following inputs are given to the program:
 3,5
 Then, the output of the program should be:
 [[0, 0, 0, 0, 0], [0, 1, 2, 3, 4], [0, 2, 4, 6, 8]] 
-
-Hints:
-Note: In case of input data being supplied to the question, it should be assumed to be a console input in a comma-separated form.
 
 <details>
 <summary>Show Solution</summary>
 
 ```python
-input_str = input()
-dimensions=[int(x) for x in input_str.split(',')]
-rowNum=dimensions[0]
-colNum=dimensions[1]
+# solution 1
+input_str = input('enter "rows,columns" then press [ENTER]: ')
+dimensions = [int(x) for x in input_str.split(',')]
+rowNum = dimensions[0]
+colNum = dimensions[1]
 multilist = [[0 for col in range(colNum)] for row in range(rowNum)]
 
 for row in range(rowNum):
@@ -224,13 +267,26 @@ for row in range(rowNum):
         multilist[row][col]= row*col
 
 print(multilist)
+
+# better solution
+from pprint import pprint
+def gen_2d_array(rows, columns):
+    """generates a 2d array where each element is row * column starting with
+    0x0
+    :param rows: the number of rows
+    :param columns: the number of columns
+    :return:
+    """
+    assert type(rows) == type(columns) == int, 'inputs must be integers'
+
+    return [[row * col for col in range(columns)] for row in range(rows)]
+
+pprint(gen_2d_array(5,5))
 ```
 </details>
 
-### Question 8
-Level 2
+### Question 8 - Level 2
 
-Question:
 Write a program that accepts a comma separated sequence of words as input and prints the words in a comma-separated sequence after sorting them alphabetically.
 Suppose the following input is supplied to the program:
 without,hello,bag,world
@@ -244,16 +300,14 @@ In case of input data being supplied to the question, it should be assumed to be
 <summary>Show Solution</summary>
 
 ```python
-items=[x for x in input().split(',')]
+items = [x for x in input('enter comma separated list of words: ').split(',')]
 items.sort()
 print(','.join(items))
 ```
 </details>
 
-### Question 9
-Level 2
+### Question 9 - Level 2
 
-Question£º
 Write a program that accepts sequence of lines as input and prints the lines after making all characters in the sentence capitalized.
 Suppose the following input is supplied to the program:
 Hello world
@@ -275,18 +329,16 @@ while True:
     if s:
         lines.append(s.upper())
     else:
-        break;
+        break
 
 for sentence in lines:
     print(sentence)
 ```
 </details>
 
-### Question 10
-Level 2
+### Question 10 - Level 2
 
-Question:
-Write a program that accepts a sequence of whitespace separated words as input and prints the words after removing all duplicate words and sorting them alphanumerically.
+Write a program that accepts a sequence of whitespace separated words as input and prints the words sorted and without duplicates.
 Suppose the following input is supplied to the program:
 hello world and practice makes perfect and hello world again
 Then, the output should be:
@@ -294,22 +346,19 @@ again and hello makes perfect practice world
 
 Hints:
 In case of input data being supplied to the question, it should be assumed to be a console input.
-We use set container to remove duplicated data automatically and then use sorted() to sort the data.
+Use set container to remove duplicated data automatically and then use sorted() to sort the data.
 
 <details>
 <summary>Show Solution</summary>
 
 ```python
-s = input()
-words = [word for word in s.split(" ")]
-print(" ".join(sorted(list(set(words)))))
+s = input('enter space separated list => ')
+print(sorted(set(s.split(' '))))
 ```
 </details>
 
-### Question 11
-Level 2
+### Question 11 - Level 2
 
-Question:
 Write a program which accepts a sequence of comma separated 4 digit binary numbers as its input and then check whether they are divisible by 5 or not. The numbers that are divisible by 5 are to be printed in a comma separated sequence.
 Example:
 0100,0011,1010,1001
@@ -317,51 +366,45 @@ Then the output should be:
 1010
 Notes: Assume the data is input by console.
 
-Hints:
-In case of input data being supplied to the question, it should be assumed to be a console input.
-
 <details>
 <summary>Show Solution</summary>
 
 ```python
 value = []
-items=[x for x in input().split(',')]
+items = [x for x in input().split(',')]
 for p in items:
     intp = int(p, 2)
-    if not intp%5:
+    if not intp % 5:
         value.append(p)
 
 print(','.join(value))
 ```
 </details>
 
-### Question 12
-Level 2
+### Question 12 - Level 2
 
-Question:
-Write a program, which will find all such numbers between 1000 and 3000 (both included) such that each digit of the number is an even number.
-The numbers obtained should be printed in a comma-separated sequence on a single line.
-
-Hints:
-In case of input data being supplied to the question, it should be assumed to be a console input.
+Write a program that prints the comma separated list of numbers between 0 and 100 (inclusive) that has all even digits.
 
 <details>
 <summary>Show Solution</summary>
 
 ```python
-values = []
-for i in range(1000, 3001):
-    s = str(i)
-    if (int(s[0])%2==0) and (int(s[1])%2==0) and (int(s[2])%2==0) and (int(s[3])%2==0):
-        values.append(s)
-print(",".join(values))
+def is_even(x):
+    # using bitwise AND which is faster than modulo
+    if int(x) & 1:
+        return False
+    else:
+        return True
+
+for i in range(101):
+    if all(map(is_even, str(i))):
+        print(i, end=', ')
+print()
 ```
 </details>
 
-### Question 13
-Level 2
+### Question 13 - Level 2
 
-Question:
 Write a program that accepts a sentence and calculate the number of letters and digits.
 Suppose the following input is supplied to the program:
 hello world! 123
@@ -376,24 +419,21 @@ In case of input data being supplied to the question, it should be assumed to be
 <summary>Show Solution</summary>
 
 ```python
-s = input()
-d={"DIGITS":0, "LETTERS":0}
-for c in s:
+string = input('input => ')
+dictio = {"DIGITS":0, "LETTERS":0}
+for c in string:
     if c.isdigit():
-        d["DIGITS"]+=1
+        dictio["DIGITS"]+=1
     elif c.isalpha():
-        d["LETTERS"]+=1
-    else:
-        pass
-print("LETTERS", d["LETTERS"])
-print("DIGITS", d["DIGITS"])
+        dictio["LETTERS"]+=1
+
+print("LETTERS", dictio["LETTERS"])
+print("DIGITS", dictio["DIGITS"])
 ```
 </details>
 
-### Question 14
-Level 2
+### Question 14 - Level 2
 
-Question:
 Write a program that accepts a sentence and calculate the number of upper case letters and lower case letters.
 Suppose the following input is supplied to the program:
 Hello world!
@@ -408,22 +448,20 @@ In case of input data being supplied to the question, it should be assumed to be
 <summary>Show Solution</summary>
 
 ```python
-s = input()
-d={"UPPER CASE":0, "LOWER CASE":0}
-for c in s:
+string = input()
+dictio ={"UPPER CASE":0, "LOWER CASE":0}
+for c in string:
     if c.isupper():
-        d["UPPER CASE"]+=1
+        dictio["UPPER CASE"] += 1
     elif c.islower():
-        d["LOWER CASE"]+=1
-    else:
-        pass
-print("UPPER CASE", d["UPPER CASE"])
-print("LOWER CASE", d["LOWER CASE"])
+        dictio["LOWER CASE"] += 1
+
+print("UPPER CASE", dictio["UPPER CASE"])
+print("LOWER CASE", dictio["LOWER CASE"])
 ```
 </details>
 
-### Question 15
-Level 2
+### Question 15 - Level 2
 
 Question:
 Write a program that computes the value of a+aa+aaa+aaaa with a given digit as the value of a.
@@ -448,15 +486,13 @@ print(n1+n2+n3+n4)
 ```
 </details>
 
-### Question 16
-Level 2
+### Question 16 - Level 2
 
-Question:
-Use a list comprehension to square each odd number in a list. The list is input by a sequence of comma-separated numbers.
-Suppose the following input is supplied to the program:
-1,2,3,4,5,6,7,8,9
+Use a list comprehension to square each odd number in a list. 
+Suppose the following list is supplied to the program:
+[1,2,3,4,5,6,7,8,9]
 Then, the output should be:
-1,3,5,7,9
+[1, 9, 25, 49, 81]
 
 Hints:
 In case of input data being supplied to the question, it should be assumed to be a console input.
@@ -465,109 +501,157 @@ In case of input data being supplied to the question, it should be assumed to be
 <summary>Show Solution</summary>
 
 ```python
-values = input()
-numbers = [x for x in values.split(",") if int(x)%2!=0]
-print(",".join(numbers))
+old_list = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+new_list = [x**2 for x in old_list if x % 2 != 0]
+print(new_list)
 ```
 </details>
 
-### Question 17
-Level 2
+### Question 17 - Level 2
 
-Question:
-Write a program that computes the net amount of a bank account based a transaction log from console input. The transaction log format is shown as following:
-D 100
-W 200
-
-D means deposit while W means withdrawal.
-Suppose the following input is supplied to the program:
-D 300
-D 300
-W 200
-D 100
-Then, the output should be:
-500
-
-Hints:
-In case of input data being supplied to the question, it should be assumed to be a console input.
+Write a program that simulates a bank account ledger. The transaction log format is shown as following:
+credit 100
+debit 50
 
 <details>
 <summary>Show Solution</summary>
 
 ```python
-netAmount = 0
-while True:
-    s = input()
-    if not s:
-        break
-    values = s.split(" ")
-    operation = values[0]
-    amount = int(values[1])
-    if operation=="D":
-        netAmount+=amount
-    elif operation=="W":
-        netAmount-=amount
-    else:
-        pass
-print(netAmount)
+def is_number(x):
+    try:
+        float(x)
+        return True
+    except ValueError:
+        return False
+
+
+class BankLedger:
+    def __init__(self):
+        self.balance = 0
+
+    def credit(self, amount):
+        if is_number(amount):
+            self.balance += amount
+        else:
+            print('ERROR, input must be a number value')
+
+    def debit(self, amount):
+        if is_number(amount):
+            if self.balance - amount < 0:
+                print(f'Not enough balance to withdraw {amount}')
+            else:
+                self.balance -= amount
+        else:
+            print('ERROR, input must be a number value')
+
+    def get_balance(self):
+        print('Current Balance:', self.balance)
+
+    def transaction(self):
+        trans = input('type transaction => ').split(' ')
+        # validate input
+        if trans[0].lower() in ['exit', 'quit', 'end']:
+            return False  # force exit
+        if len(trans) != 2:
+            print('usage: [debit/credit] [amount]')
+            return True
+        elif trans[0].lower() not in ['credit', 'c', 'debit', 'd']:
+            print('first argument must be "credit" or "debit"')
+            return True
+        elif not is_number(trans[1]):
+            print('second argument must be a number')
+            return True
+        elif float(trans[1]) < 0:
+            print('second argument must be a positive number')
+            return True
+        else:
+            if trans[0].lower() in ['credit', 'c']:
+                self.credit(float(trans[1]))
+            if trans[0].lower() in ['debit', 'd']:
+                self.debit(float(trans[1]))
+            return True
+
+        print('this should not ever be printed!')
+
+
+def main():
+    my_acct = BankLedger()
+    run = True
+    print('usage: [debit/credit] [amount]')
+    print('type "exit" to end program execution')
+    # start loop, show current balance
+    while run:
+        my_acct.get_balance()  # print current balance
+        run = my_acct.transaction()  # post a transaction / terminate program
+
+
+# run the program
+main()
+
 ```
 </details>
 
-### Question 18
-Level 3
+### Question 18 - Level 3
 
-Question:
-A website requires the users to input username and password to register. Write a program to check the validity of password input by users.
-Following are the criteria for checking the password:
-1. At least 1 letter between [a-z]
-2. At least 1 number between [0-9]
-1. At least 1 letter between [A-Z]
-3. At least 1 character from [$#@]
-4. Minimum length of transaction password: 6
-5. Maximum length of transaction password: 12
-Your program should accept a sequence of comma separated passwords and will check them according to the above criteria. Passwords that match the criteria are to be printed, each separated by a comma.
-Example
-If the following passwords are given as input to the program:
-ABd1234@1,a F1#,2w3E*,2We3345
-Then, the output of the program should be:
-ABd1234@1
-
-Hints:
-In case of input data being supplied to the question, it should be assumed to be a console input.
+Write a function to detect if a given string is a strong password.
+Eight or more characters. Both upper and lowecase. One or more digits.
 
 <details>
 <summary>Show Solution</summary>
 
 ```python
 import re
-value = []
-items=[x for x in input().split(',')]
-for p in items:
-    if len(p)<6 or len(p)>12:
-        continue
+
+def strong_psw(psw, verbose=False):
+    """ uses regex to determine if passed string is a strong password.
+        Eight or more characters. Both upper and lowecase. One or more digits.
+        source: https://automatetheboringstuff.com/2e/chapter7/
+        @param psw: string to be checked
+        @param verbose: boolean: True returns string on error
+        @return boolean: True if psw is strong, False or error string otherwise
+
+        >>> strong_psw('bob')
+        False
+        >>> strong_psw(1234)  # not string
+        Traceback (most recent call last):
+        ...
+        ValueError: arg must be a string
+        >>> strong_psw('AuntMary12345')
+        True
+        >>> strong_psw('nouppercasecharshere')
+        False
+        >>> print(strong_psw('1234567890', True))
+        must have upper case letter
+
+    """
+    if type(psw) != str:
+        raise ValueError('arg must be a string')
+
+    # REFACTOR: these can be combined with lookahead, but cleaner this way
+    psw_check1 = re.compile('.{8,}')    # 8 or more anything in length
+    psw_check2 = re.compile('[A-Z]+')   # one or more upper case
+    psw_check3 = re.compile('[a-z]+')   # one or more lower case
+    psw_check4 = re.compile(r'\d+')     # one or more digits
+
+    if verbose:
+        if psw_check1.search(psw) is None:
+            return 'password must be longer than 8'
+        if psw_check2.search(psw) is None:
+            return 'must have upper case letter'
+        if psw_check3.search(psw) is None:
+            return 'must have lower case letter'
+        if psw_check4.search(psw) is None:
+            return 'must have at least one digit'
+        return True
     else:
-        pass
-    if not re.search("[a-z]",p):
-        continue
-    elif not re.search("[0-9]",p):
-        continue
-    elif not re.search("[A-Z]",p):
-        continue
-    elif not re.search("[$#@]",p):
-        continue
-    elif re.search("\s",p):
-        continue
-    else:
-        pass
-    value.append(p)
-print(",".join(value))
+        test = bool(psw_check1.search(psw)) and bool(psw_check2.search(psw)) \
+            and bool(psw_check3.search(psw)) and bool(psw_check4.search(psw))
+        return test
 ```
 </details>
 
-### Question 19
-Level 3
+### Question 19 - Level 3
 
-Question:
 You are required to write a program to sort the (name, age, height) tuples by ascending order where name is string, age and height are numbers. The tuples are input by console. The sort criteria is:
 1: Sort based on name;
 2: Then sort based on age;
